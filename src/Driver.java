@@ -2,8 +2,8 @@
 public class Driver {
 
 	public static void main(String[] args) {
-		Schedule tester = new Schedule();
-		System.out.println(tester);
+		Emailer test = new Emailer();
+		test.sendEmail("noah@jeff.org", "Hopefully this works", "Check 123");
 	}
 
 }
