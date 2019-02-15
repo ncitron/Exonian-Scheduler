@@ -21,21 +21,21 @@ public class Appointment {
 		appType = theType;
 	}
 	
+	public Date getStartTime() {
+		return startTime;
+	}
 	
-	public String toString() {
-		String strType = "" + appType;
-		return startTime.toString() + " " + endTime.toString() + " " + appName + " " + strType;
+	public Date getEndTime() {
+		return endTime;
 	}
 	
 	public String toDisplayString() {
 		return "";
 	}
-
-	public static void main(String[] args) {
-		Appointment app = new Appointment();
-		
-		System.out.print(app.toString());
-		
+	
+	public String toString() {
+		String strType = "" + appType;
+		return startTime.toString() + " " + endTime.toString() + " " + appName + " " + strType;
 	}
 
 }

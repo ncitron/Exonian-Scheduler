@@ -1,10 +1,9 @@
 
-public class Main {
+public class Driver {
 
 	public static void main(String[] args) {
 		Schedule tester = new Schedule();
-		tester.getSchedule();
-		System.out.println("Success");
+		System.out.println(tester);
 	}
 
 }
