@@ -1,14 +1,15 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.Date;
 
 public class Schedule {
 	
 // IMPORTANT NOTE:
-//	Monday is day 0 and Sunday is day 6
+//	Monday is day 0 and Sunday is day 6 for week one
+//	Monday is day 7 and Sunday is day 13 for week two
 //	A format is 0 and H format is 7
-//	
-//	
+//	Type 0 means academic
 //	
 //	
 //	
@@ -19,7 +20,7 @@ public class Schedule {
 	private ArrayList<Appointment>[] schedule;
 	private Scanner scan = new Scanner (System.in);
 	private String[] formatHolderName;     /////THIS WILL HOLD A - H FORMATS to be loaded into the schedule.
-	private int[] formatHolderNum;         //// This says whether or not they use reserve
+	private boolean[] formatHolderReserve;         //// This says whether or not they use reserve
 	
 	Schedule() {
 		this.name = "";
@@ -27,7 +28,7 @@ public class Schedule {
 		numUsers++;
 		schedule = (ArrayList<Appointment>[])new ArrayList[14];  
 		formatHolderName = new String[8];
-		formatHolderNum = new int[8];
+		formatHolderReserve = new boolean[8];
 	}
 	
 	Schedule(String name) {
@@ -36,7 +37,7 @@ public class Schedule {
 		numUsers++;
 		schedule = (ArrayList<Appointment>[])new ArrayList[14];     
 		formatHolderName = new String[8];
-		formatHolderNum = new int[8];
+		formatHolderReserve = new boolean[8];
 	}
 	
 	public void getSchedule() {
@@ -53,14 +54,24 @@ public class Schedule {
 				System.out.println("Does this class use reserve? Please type \"yes\" or \"no\".");
 				String tempAnswer = scan.nextLine();
 				if(tempAnswer.toLowerCase().equals("yes")) {
-					formatHolderNum[i] = 1;
+					formatHolderReserve[i] = true;
 					okayAns = true;
 				} else if(tempAnswer.toLowerCase().equals("no")) {
-					formatHolderNum[i] = 0;
+					formatHolderReserve[i] = false;
 					okayAns = true;
 				}
 			}
-		}	
+		}
+		
+		//MONDAY week one:
+		schedule[0].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[0], 0, formatHolderReserve[0])); //8 am class
+		schedule[1].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[1], 0, formatHolderReserve[1]));
+		schedule[2].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[2], 0, formatHolderReserve[2]));
+		schedule[3].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[3], 0, formatHolderReserve[3]));
+		schedule[4].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[4], 0, formatHolderReserve[4]));
+		schedule[5].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[5], 0, formatHolderReserve[5]));
+		schedule[6].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[6], 0, formatHolderReserve[6]));
+		schedule[7].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[7], 0, formatHolderReserve[7]));
 	}
 	
 	public void addAppointment(Appointment a) {
