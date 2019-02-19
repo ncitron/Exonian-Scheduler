@@ -218,7 +218,7 @@ public class Schedule {
 		if(!isFree) {
 			System.out.println("We are sorry, but this appointment may overlap with another one");
 		} else {
-			schedule[newStartDay].add(new Appointment(newStart, newEnd, newName, 0, true));
+			schedule[newStartDay].add(new Appointment(newStart, newEnd, newName, 1, true));
 			System.out.println("This appointment has been successfully added");
 		}
 		//check that there are not schedule conflicts with other appointments
