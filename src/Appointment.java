@@ -8,6 +8,7 @@ public class Appointment {
 	private int appType;
 	private boolean useReserve;
 	private boolean reminded;
+	private boolean reserveToday;
 	
 	public Appointment() {
 		startTime = new simpleDate(0, 0, 0);
@@ -16,14 +17,16 @@ public class Appointment {
 		appType = 0;
 		useReserve = false;
 		reminded = false;
+		reserverToday = false;
 	}
-	public Appointment(simpleDate theStart, simpleDate theEnd, String theName, int theType, boolean reserve) {
+	public Appointment(simpleDate theStart, simpleDate theEnd, String theName, int theType, boolean reserve, boolean reserveToday) {
 		startTime = theStart;
 		endTime = theEnd;
 		appName = theName;
 		appType = theType;
 		useReserve = reserve;
 		reminded = false;
+		reserveToday = reserveToday;
 	}
 	
 	public String getName() {
@@ -32,6 +35,10 @@ public class Appointment {
 	
 	public boolean usesReserve() {
 		return useReserve;
+	}
+	
+	public boolean isReserveToday() {
+		return reserveToday;
 	}
 	
 	public boolean getReminded() {
