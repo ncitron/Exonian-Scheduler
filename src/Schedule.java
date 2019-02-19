@@ -70,9 +70,10 @@ public class Schedule {
 	
 	public boolean checkAppointments() {
 		Date now = new Date();
-		//for()
-		schedule[now.getDay()-1].get(0).getStartTime();
-		Date later = new Date();
+		int 
+		for(int i = 0; i < schedule[now.getDay()-1].size(); i++) {
+			schedule[now.getDay()-1].get(i).getStartTime();
+		}
 	}
 	
 	public void sendReminder(Appointment a) { //Should this return a string or an int or an appointment or just send the email?
