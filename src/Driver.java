@@ -5,6 +5,7 @@ public class Driver {
 		Schedule schedule = new Schedule();
 		schedule.getSchedule();
 		
+		//Emailer test = new Emailer();
 		//test.sendEmail("noah@jeff.org", "Hopefully this works", "Check 123");
 	}
 
