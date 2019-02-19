@@ -7,15 +7,19 @@ public class Driver {
 		Schedule schedule = new Schedule();
 		schedule.getSchedule();
 		
+		//main loop
+		while(true) {
+			schedule.checkAppointments();
+		}
+		
 		//Emailer test = new Emailer();
-		Emailer test = new Emailer();
+		//Emailer test = new Emailer();
 		//test.sendEmail("noah@jeff.org", "Hopefully this works", "Check 123");
 		//System.out.println(DayOfWeek.values());
 		//Schedule schedule = new Schedule();
 		//schedule.getSchedule();
 		
-		Date now = new Date();
-		System.out.println(now.getDay());
+		
 	}
 
 }

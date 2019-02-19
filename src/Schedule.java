@@ -22,6 +22,7 @@ public class Schedule {
 	private Scanner scan = new Scanner (System.in);
 	private String[] formatHolderName;     /////THIS WILL HOLD A - H FORMATS to be loaded into the schedule.
 	private boolean[] formatHolderReserve;         //// This says whether or not they use reserve
+	private String email; 
 	
 	Schedule() {
 		this.name = "";
@@ -46,8 +47,8 @@ public class Schedule {
 	public void getSchedule() {
 		
 		System.out.println("We will now ask you a few questions to set up your schedule");
-		System.out.println("What username would you like to use?");
-		name = scan.nextLine();
+		System.out.println("What is your email?");
+		email = scan.nextLine();
 																//Also ask what week (one or two) it currently is
 		for(int i = 0; i < 8; i++) {
 			System.out.println("What is your " + (char)(65 + i) + " format class?");
@@ -73,7 +74,7 @@ public class Schedule {
 		schedule[0].add(new Appointment(new simpleDate(0, 10, 45), new simpleDate(0, 11, 35), formatHolderName[2], 0, formatHolderReserve[2]));
 		schedule[0].add(new Appointment(new simpleDate(0, 11, 40), new simpleDate(0, 12, 50), formatHolderName[3], 0, formatHolderReserve[3])); // D Long
 		schedule[0].add(new Appointment(new simpleDate(0, 13, 40), new simpleDate(0, 14, 50), formatHolderName[4], 0, formatHolderReserve[4])); // E Long
-		schedule[0].add(new Appointment(new simpleDate(0, 14, 55), new simpleDate(0, 15, 45), formatHolderName[5], 0, formatHolderReserve[5]));
+	    schedule[0].add(new Appointment(new simpleDate(0, 4, 55), new simpleDate(0, 15, 45), formatHolderName[5], 0, formatHolderReserve[5]));
 		schedule[0].add(new Appointment(new simpleDate(0, 16, 15), new simpleDate(0, 17, 5), formatHolderName[6], 0, formatHolderReserve[6]));
 		schedule[0].add(new Appointment(new simpleDate(0, 17, 10), new simpleDate(0, 18, 0), formatHolderName[7], 0, formatHolderReserve[7])); 
 		
@@ -83,7 +84,7 @@ public class Schedule {
 		schedule[1].add(new Appointment(new simpleDate(1, 10, 45), new simpleDate(1, 11, 35), formatHolderName[3], 0, formatHolderReserve[3]));
 		schedule[1].add(new Appointment(new simpleDate(1, 11, 40), new simpleDate(1, 12, 50), formatHolderName[2], 0, formatHolderReserve[2])); // C Long
 		schedule[1].add(new Appointment(new simpleDate(1, 13, 40), new simpleDate(1, 14, 30), formatHolderName[4], 0, formatHolderReserve[4]));
-		schedule[1].add(new Appointment(new simpleDate(1, 14, 35), new simpleDate(1, 15, 45), formatHolderName[5], 0, formatHolderReserve[5])); // F Long
+		/*I edited this one for testing */	schedule[1].add(new Appointment(new simpleDate(1, 15, 41), new simpleDate(1, 15, 45), formatHolderName[5], 0, formatHolderReserve[5])); // F Long
 		schedule[1].add(new Appointment(new simpleDate(1, 16, 15), new simpleDate(1, 17, 5), formatHolderName[6], 0, formatHolderReserve[6]));
 		schedule[1].add(new Appointment(new simpleDate(1, 17, 10), new simpleDate(1, 18, 0), formatHolderName[7], 0, formatHolderReserve[7]));
 		
@@ -170,16 +171,22 @@ public class Schedule {
 		//use a search algorithm to place add the appointment into the schedule in the proper order
 	}
 	
-	public boolean checkAppointments() {
+	public void checkAppointments() {
 		Date now = new Date();
+		simpleDate tmp;
+		Emailer mailer = new Emailer();
 		for(int i = 0; i < schedule[now.getDay()-1].size(); i++) {
-			schedule[now.getDay()-1].get(i).getStartTime();
-		}
+			tmp = schedule[now.getDay()-1].get(i).getStartTime();
+			now = new Date();
+			if(now.getHours() == tmp.getHour() && now.getMinutes() == tmp.getMinute() && schedule[now.getDay()-1].get(i).getReminded() == false) {
+				mailer.sendEmail(email, schedule[now.getDay()-1].get(i).getName() + " starts now!", "");
+				schedule[now.getDay()-1].get(i).setReminded(true);
+			}
+		}	
 	}
 	
-	public void sendReminder(Appointment a) { //Should this return a string or an int or an appointment or just send the email?
-		//Also, if classes have THE SAME EXACT NAME, don't send two reminders
-		
+	public void checkResetReminded() {
+		//if(now.)
 	}
 	
 	public String toString() {

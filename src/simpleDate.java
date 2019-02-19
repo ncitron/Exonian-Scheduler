@@ -9,4 +9,16 @@ public class simpleDate {
 		this.hour = hour;
 		this.minute = minute;
 	}
+	
+	public int getDay() {
+		return day;
+	}
+	
+	public int getHour() {
+		return hour;
+	}
+	
+	public int getMinute() {
+		return minute;
+	}
 }
