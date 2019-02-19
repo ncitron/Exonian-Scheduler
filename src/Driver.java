@@ -1,5 +1,4 @@
-//import java.time.DayOfWeek;
-import java.util.Date;
+
 
 public class Driver {
 
@@ -10,16 +9,7 @@ public class Driver {
 		//main loop
 		while(true) {
 			schedule.checkAppointments();
+			schedule.checkResetReminded();
 		}
-		
-		//Emailer test = new Emailer();
-		//Emailer test = new Emailer();
-		//test.sendEmail("noah@jeff.org", "Hopefully this works", "Check 123");
-		//System.out.println(DayOfWeek.values());
-		//Schedule schedule = new Schedule();
-		//schedule.getSchedule();
-		
-		
 	}
-
 }

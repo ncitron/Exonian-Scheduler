@@ -23,6 +23,7 @@ public class Schedule {
 	private String[] formatHolderName;     /////THIS WILL HOLD A - H FORMATS to be loaded into the schedule.
 	private boolean[] formatHolderReserve;         //// This says whether or not they use reserve
 	private String email; 
+	private int week;
 	
 	Schedule() {
 		this.name = "";
@@ -49,7 +50,10 @@ public class Schedule {
 		System.out.println("We will now ask you a few questions to set up your schedule");
 		System.out.println("What is your email?");
 		email = scan.nextLine();
-																//Also ask what week (one or two) it currently is
+		System.out.println("Is it week 1 or week 2?");
+		week = scan.nextInt();
+		scan.nextLine();
+		
 		for(int i = 0; i < 8; i++) {
 			System.out.println("What is your " + (char)(65 + i) + " format class?");
 			formatHolderName[i] = scan.nextLine();
@@ -163,7 +167,6 @@ public class Schedule {
 		
 		System.out.println("Thank you. Your class information has been entered into the schedule");
 		
-		
 	}
 	
 	public void addAppointment(Appointment a) {
@@ -174,24 +177,32 @@ public class Schedule {
 	public void checkAppointments() {
 		Date now = new Date();
 		simpleDate tmp;
+		ArrayList<Appointment> tmpDay = schedule[(now.getDay()-1) + 7 * (week-1)];
 		Emailer mailer = new Emailer();
-		for(int i = 0; i < schedule[now.getDay()-1].size(); i++) {
-			tmp = schedule[now.getDay()-1].get(i).getStartTime();
-			now = new Date();
-			if(now.getHours() == tmp.getHour() && now.getMinutes() == tmp.getMinute() && schedule[now.getDay()-1].get(i).getReminded() == false) {
-				mailer.sendEmail(email, schedule[now.getDay()-1].get(i).getName() + " starts now!", "");
-				schedule[now.getDay()-1].get(i).setReminded(true);
+		for(int i = 0; i < tmpDay.size(); i++) {		
+			tmp = tmpDay.get(i).getStartTime();
+			//now = new Date();
+			if(now.getHours() == tmp.getHour() && now.getMinutes() == tmp.getMinute() && tmpDay.get(i).getReminded() == false) {
+				mailer.sendEmail(email, tmpDay.get(i).getName() + " starts now!", "");
+				tmpDay.get(i).setReminded(true);
 			}
-		}	
+		}
+		//reset the week if wk2 Sunday
+		if(now.getDay() == 0 && week == 2 && now.getHours() == 23 && now.getMinutes() == 58) {
+			week = 1;
+		}
 	}
 	
 	public void checkResetReminded() {
-		//if(now.)
+		Date now = new Date();
+		if(now.getHours() == 23 && now.getMinutes() == 58) {
+			for(int i = 0; i < schedule[(now.getDay()-1) + 7 * (week-1)].size(); i++) {
+				schedule[(now.getDay()-1) + 7 * (week-1)].get(i).setReminded(false);
+			}
+		}
 	}
 	
 	public String toString() {
 		return schedule + "";
 	}
-	
-	
 }

@@ -21,4 +21,8 @@ public class simpleDate {
 	public int getMinute() {
 		return minute;
 	}
+	
+	public String toString() {
+		return "" + day + hour + minute;
+	}
 }
