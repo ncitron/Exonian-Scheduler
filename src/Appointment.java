@@ -6,6 +6,7 @@ public class Appointment {
 	private Date endTime;
 	private String appName;
 	private int appType;
+	private boolean useReserve;
 	
 	public Appointment() {
 		Date now = new Date();
@@ -13,12 +14,18 @@ public class Appointment {
 		endTime = now;	// ^^^
 		appName = "";
 		appType = 0;
+		useReserve = false;
 	}
-	public Appointment(Date theStart, Date theEnd, String theName, int theType) {
+	public Appointment(Date theStart, Date theEnd, String theName, int theType, boolean reserve) {
 		startTime = theStart;
 		endTime = theEnd;
 		appName = theName;
 		appType = theType;
+		useReserve = reserve;
+	}
+	
+	public boolean usesReserve() {
+		return useReserve;
 	}
 	
 	public Date getStartTime() {
