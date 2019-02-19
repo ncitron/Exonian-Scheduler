@@ -64,14 +64,30 @@ public class Schedule {
 		}
 		
 		//MONDAY week one:
-		schedule[0].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[0], 0, formatHolderReserve[0])); //8 am class
-		schedule[1].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[1], 0, formatHolderReserve[1]));
-		schedule[2].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[2], 0, formatHolderReserve[2]));
-		schedule[3].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[3], 0, formatHolderReserve[3]));
-		schedule[4].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[4], 0, formatHolderReserve[4]));
-		schedule[5].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[5], 0, formatHolderReserve[5]));
-		schedule[6].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[6], 0, formatHolderReserve[6]));
-		schedule[7].set(0,Appointment(Date theStart, Date theEnd, formatHolderName[7], 0, formatHolderReserve[7]));
+		schedule[0].set(0,Appointment(simpleDate(0, 8, 0), simpleDate(0, 8, 50), formatHolderName[0], 0, formatHolderReserve[0])); //A format 8 am class
+		schedule[0].set(1,Appointment(simpleDate(0, 8, 55), simpleDate(0, 9, 45), formatHolderName[1], 0, formatHolderReserve[1]));
+		schedule[0].set(2,Appointment(simpleDate(0, 10, 45), simpleDate(0, 11, 35), formatHolderName[2], 0, formatHolderReserve[2]));
+		schedule[0].set(3,Appointment(simpleDate(0, 11, 40), simpleDate(0, 12, 50), formatHolderName[3], 0, formatHolderReserve[3]));
+		schedule[0].set(4,Appointment(simpleDate(0, 13, 40), simpleDate(0, 14, 50), formatHolderName[4], 0, formatHolderReserve[4])); // E Long
+		schedule[0].set(5,Appointment(simpleDate(0, 14, 55), simpleDate(0, 15, 45), formatHolderName[5], 0, formatHolderReserve[5]));
+		schedule[0].set(6,Appointment(simpleDate(0, 16, 15), simpleDate(0, 17, 5), formatHolderName[6], 0, formatHolderReserve[6]));
+		schedule[0].set(7,Appointment(simpleDate(0, 17, 10), simpleDate(0, 18, 0), formatHolderName[7], 0, formatHolderReserve[7])); 
+		
+		//Tuesday week one:
+		schedule[1].set(1,Appointment(simpleDate(0, 8, 0), simpleDate(0, 8, 55), formatHolderName[1], 0, formatHolderReserve[1])); //B format 8 am class
+		schedule[1].set(0,Appointment(simpleDate(0, 8, 55), simpleDate(0, 9, 45), formatHolderName[0], 0, formatHolderReserve[0]));
+		schedule[1].set(3,Appointment(simpleDate(0, 10, 45), simpleDate(0, 11, 35), formatHolderName[3], 0, formatHolderReserve[3]));
+		schedule[1].set(2,Appointment(simpleDate(0, 11, 40), simpleDate(0, 12, 50), formatHolderName[2], 0, formatHolderReserve[2]));
+		schedule[1].set(4,Appointment(simpleDate(0, 13, 40), simpleDate(0, 14, 30), formatHolderName[4], 0, formatHolderReserve[4]));
+		schedule[1].set(5,Appointment(simpleDate(0, 14, 35), simpleDate(0, 15, 45), formatHolderName[5], 0, formatHolderReserve[5]));  //F Long
+		schedule[1].set(6,Appointment(simpleDate(0, 16, 15), simpleDate(0, 17, 5, formatHolderName[6], 0, formatHolderReserve[6]));
+		schedule[1].set(7,Appointment(simpleDate(0, 17, 10), simpleDate(0, 18, 0), formatHolderName[7], 0, formatHolderReserve[7]));
+		
+		//Wednesday week one:
+		schedule[2].set(2,Appointment(simpleDate(0, 8, 0), simpleDate(0, 8, 55), formatHolderName[2], 0, formatHolderReserve[2]));//C format 8 am class
+		schedule[2].set(1,Appointment(simpleDate(0, 8, 55), simpleDate(0, 9, 45), formatHolderName[1], 0, formatHolderReserve[1]));//B
+		schedule[2].set(4,Appointment(simpleDate(0, 11, 05), simpleDate(0, 11, 55), formatHolderName[4], 0, formatHolderReserve[4]));//E
+		schedule[2].set(6,Appointment(simpleDate(0, 12, 0), simpleDate(0, 12, 50), formatHolderName[6], 0, formatHolderReserve[6]));//G
 	}
 	
 	public void addAppointment(Appointment a) {
