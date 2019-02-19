@@ -2,21 +2,20 @@ import java.util.Date;
 
 public class Appointment {
 	
-	private Date startTime;
-	private Date endTime;
+	private simpleDate startTime;
+	private simpleDate endTime;
 	private String appName;
 	private int appType;
 	private boolean useReserve;
 	
 	public Appointment() {
-		Date now = new Date();
-		startTime = now; //Current time and date --> probably should be changed
-		endTime = now;	// ^^^
+		startTime = new simpleDate(0, 0, 0);
+		endTime = new simpleDate(0, 0, 0);
 		appName = "";
 		appType = 0;
 		useReserve = false;
 	}
-	public Appointment(Date theStart, Date theEnd, String theName, int theType, boolean reserve) {
+	public Appointment(simpleDate theStart, simpleDate theEnd, String theName, int theType, boolean reserve) {
 		startTime = theStart;
 		endTime = theEnd;
 		appName = theName;
@@ -28,11 +27,11 @@ public class Appointment {
 		return useReserve;
 	}
 	
-	public Date getStartTime() {
+	public simpleDate getStartTime() {
 		return startTime;
 	}
 	
-	public Date getEndTime() {
+	public simpleDate getEndTime() {
 		return endTime;
 	}
 	
