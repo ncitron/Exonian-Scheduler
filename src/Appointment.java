@@ -17,7 +17,7 @@ public class Appointment {
 		appType = 0;
 		useReserve = false;
 		reminded = false;
-		reserverToday = false;
+		reserveToday = false;
 	}
 	public Appointment(simpleDate theStart, simpleDate theEnd, String theName, int theType, boolean reserve, boolean reserveToday) {
 		startTime = theStart;
