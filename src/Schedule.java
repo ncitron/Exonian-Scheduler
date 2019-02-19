@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Date;
 
 public class Schedule {
 	
@@ -65,6 +66,13 @@ public class Schedule {
 	public void addAppointment(Appointment a) {
 		//check that there are not schedule conflicts with other appointments
 		//use a search algorithm to place add the appointment into the schedule in the proper order
+	}
+	
+	public boolean checkAppointments() {
+		Date now = new Date();
+		//for()
+		schedule[now.getDay()-1].get(0).getStartTime();
+		Date later = new Date();
 	}
 	
 	public void sendReminder(Appointment a) { //Should this return a string or an int or an appointment or just send the email?
