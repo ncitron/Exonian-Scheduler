@@ -57,6 +57,10 @@ public class Appointment {
 		return endTime;
 	}
 	
+	public int getType() {
+		return appType;
+	}
+	
 	public String toDisplayString() {
 		return "";
 	}
