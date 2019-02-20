@@ -181,9 +181,9 @@ public class Schedule {
 		Emailer mailer = new Emailer();
 		for(int i = 0; i < tmpDay.size(); i++) {		
 			tmp = tmpDay.get(i).getStartTime();
-			//now = new Date();
+			now = new Date();
 			if(now.getHours() == tmp.getHour() && now.getMinutes() == tmp.getMinute() && tmpDay.get(i).getReminded() == false) {
-				if((tmpDay.get(i).isReserveToday() && tmpDay.get(i).usesReserve())) {
+				if(!(tmpDay.get(i).isReserveToday() == true && tmpDay.get(i).usesReserve() == false)){
 					mailer.sendEmail(email, tmpDay.get(i).getName() + " starts now!", "");
 					tmpDay.get(i).setReminded(true);
 				}

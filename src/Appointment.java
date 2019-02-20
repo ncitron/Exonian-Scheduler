@@ -26,7 +26,7 @@ public class Appointment {
 		appType = theType;
 		useReserve = reserve;
 		reminded = false;
-		reserveToday = reserveToday;
+		this.reserveToday = reserveToday;
 	}
 	
 	public String getName() {
