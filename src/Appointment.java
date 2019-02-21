@@ -65,7 +65,7 @@ public class Appointment {
 		return "";
 	}
 	
-	public String toString() {
+	public String toString() {             //NEEDS TO BE UPDATED FOR THE NEW PARAMETERS
 		String strType = "" + appType;
 		return startTime.toString() + " " + endTime.toString() + " " + appName + " " + strType;
 	}

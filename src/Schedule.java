@@ -12,14 +12,14 @@ public class Schedule {
 //	A format is 0 and H format is 7
 //	Type 0 means academic
 //	WE ALSO NEED TO CHECK IF YOU TYPE "free"
-//	
-//	
+//	We still need to type a reminder for homework
+//	We need to fix the scanner for "what week" so that it is foolproof for ints
 
 	private String name;
 	private int id;
 	static int numUsers = 0;
 	private ArrayList<Appointment>[] schedule;
-	private Scanner scan = new Scanner (System.in);
+	private transient Scanner scan = new Scanner (System.in);
 	private String[] formatHolderName;     /////THIS WILL HOLD A - H FORMATS to be loaded into the schedule.
 	private boolean[] formatHolderReserve;         //// This says whether or not they use reserve
 	private String email; 
@@ -53,7 +53,7 @@ public class Schedule {
 		System.out.println("We will now ask you a few questions to set up your schedule");
 		System.out.println("What is your email?");
 		email = scan.nextLine();
-		System.out.println("Is it week 1 or week 2?");
+		System.out.println("Is it week 1 or week 2? Type \"1\" or \"2\".");
 		week = scan.nextInt();
 		scan.nextLine();
 		
@@ -77,14 +77,12 @@ public class Schedule {
 					okayAns = true;
 				}
 			}
-		}
+		}                  //We should ask if they like all that they typed or if they want to re-enter all information
+	}
+	
+	public void fillSchedule() {
 //WEEK ONE:
 		//MONDAY week one:
-		
-
-//WEEK TWO:	
-		//Monday week two:
-
 		schedule[0].add(new Appointment(new simpleDate(0, 8, 0), new simpleDate(0, 8, 50), formatHolderName[0], formatHolderType[0], formatHolderReserve[0], true)); //A format 8 am class
 		schedule[0].add(new Appointment(new simpleDate(0, 8, 55), new simpleDate(0, 9, 45), formatHolderName[1], formatHolderType[1], formatHolderReserve[1], false));
 		schedule[0].add(new Appointment(new simpleDate(0, 10, 45), new simpleDate(0, 11, 35), formatHolderName[2], formatHolderType[2], formatHolderReserve[2], false));
@@ -214,8 +212,8 @@ public class Schedule {
 			}
 		}
 		
-		int spotInArrayList = 0;
-		if(isFree) {
+		int spotInArrayList = 0;                
+		if(isFree) {										//This part searches for the right spot to put the new Appointment
 			for(int i = 0; i < schedule[newStartDay].size(); i++) {
 				if(newStart.compareTo(schedule[newStartDay].get(i).getStartTime()) < 0) {
 					spotInArrayList = i;
@@ -229,8 +227,6 @@ public class Schedule {
 			schedule[newStartDay].add(new Appointment(newStart, newEnd, newName, 1, true, true));
 			System.out.println("This appointment has been successfully added");
 		}
-		//check that there are not schedule conflicts with other appointments
-		//use a search algorithm to place add the appointment into the schedule in the proper order
 	}
 	
 	public void checkAppointments() {
@@ -264,7 +260,27 @@ public class Schedule {
 	}
 	
 	public void cancelAppointment() {
+		System.out.println("Please type the exact name of the appointment you would like to cancel:");
+		String name = scan.nextLine();
+		int  locationOfDay = 0;
+		int locationOfAppointment = 0;
+		boolean found = false;
+		for(int i = 0; i < 14; i++) {
+			for(int j = 0; j < schedule[i].size(); j++) {
+				if(schedule[i].get(j).getName().toUpperCase().equals(name.toUpperCase()) && schedule[i].get(j).getType() == 1){
+					locationOfDay = i;
+					locationOfAppointment = j;
+					found = true;
+				}
+			}
+		}
 		
+		if(found) {
+			schedule[locationOfDay].remove(locationOfAppointment);
+			System.out.println("The appointment has been successfully removed.");
+		} else {
+			System.out.println("An appointment of the given name could no be located. Please make sure that the name is typed exactly as it was originally entered.");
+		}
 	}
 	
 	public String toString() {
