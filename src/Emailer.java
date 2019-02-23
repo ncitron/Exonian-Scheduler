@@ -5,19 +5,22 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.Store;
+import javax.mail.search.*;
+import javax.mail.*;
+import javax.mail.Multipart;
 
 public class Emailer {
 	
 	private String email;
 	private String password;
+	private int totalMessages;
 	
 	Emailer() {
 		email = "exeterschedule@gmail.com";
 		password = "Exeter2019";
+		totalMessages = getNumMessages();
 	}
 	
 	public void sendEmail(String to, String subject, String message) {	
@@ -50,9 +53,9 @@ public class Emailer {
         }
 	}
 	
-	public void getNextEmail() {
+	public String[] getRecentEmail() {
 		Properties props = new Properties();
-		props.put("mail.store.protocol", "pop3");
+		//props.put("mail.store.protocol", "pop3");
 		props.put("mail.pop3.host", "pop.gmail.com");
 		props.put("mail.pop3.port", "995");
 		props.put("mail.pop3.starttls.enable", "true");
@@ -60,10 +63,57 @@ public class Emailer {
 		try {
 	        Store holder = session.getStore("pop3s");
 	        holder.connect("pop.gmail.com", email, password);
-	        holder.getFolder("INBOX").open(Folder.READ_ONLY);
+	        Folder f = holder.getFolder("INBOX");
+	        f.open(Folder.READ_ONLY);
+	        
+	        Message[] tmp = f.getMessages();
+	        if(tmp.length == 0 | tmp.length == totalMessages) {
+	        	return null;
+	        }
+	        totalMessages++;
+	        Message m = tmp[tmp.length-1];
+	        
+	        String[] returner = new String[3];
+	        
+	        //System.out.println(m.getContentType());
+	        
+	        returner[0] = m.getFrom()[0].toString();
+	        returner[1] = m.getSubject();
+	        if (m.isMimeType("text/plain")) {
+	        	returner[2] = (String)m.getContent();
+	        }
+	        
+	        if (m.isMimeType("multipart/*")) {
+	        	Multipart mp = (Multipart)m.getContent();
+	        	returner[2] = mp.getBodyPart(0).getContent().toString();
+	        }
+	        
+	        return returner;
 	        
 		} catch(Exception e) {
 			System.out.println("Exception: " + e);
+			return null;
+		}
+	}
+	
+	public int getNumMessages() {
+		Properties props = new Properties();
+		props.put("mail.pop3.host", "pop.gmail.com");
+		props.put("mail.pop3.port", "995");
+		props.put("mail.pop3.starttls.enable", "true");
+		Session session = Session.getDefaultInstance(props);
+		try {
+	        Store holder = session.getStore("pop3s");
+	        holder.connect("pop.gmail.com", email, password);
+	        Folder f = holder.getFolder("INBOX");
+	        f.open(Folder.READ_ONLY);
+	        
+	        Message[] tmp = f.getMessages();
+	        return tmp.length;
+	        
+		} catch(Exception e) {
+			System.out.println("Exception: " + e);
+			return -1;
 		}
 	}
 	
