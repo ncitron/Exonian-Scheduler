@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Date;
 import java.util.Arrays;
 
-public class Schedule {
+public class Schedule implements java.io.Serializable {
 	
 // IMPORTANT NOTE:
 //	Monday is day 0 and Sunday is day 6 for week one
