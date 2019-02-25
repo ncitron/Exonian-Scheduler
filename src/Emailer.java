@@ -11,18 +11,22 @@ import javax.mail.search.*;
 import javax.mail.*;
 import javax.mail.Multipart;
 
+
+//Noah
 public class Emailer {
 	
 	private String email;
 	private String password;
 	private int totalMessages;
 	
+	//Class constructor. Sets email and password as well as gets the init total messages in inbox.
 	Emailer() {
 		email = "exeterschedule@gmail.com";
 		password = "Exeter2019";
 		totalMessages = getNumMessages();
 	}
 	
+	//This method sends an email. It requires a argument the recipient, the email subject, and the email body
 	public void sendEmail(String to, String subject, String message) {	
         Properties props = new Properties();
         props.put("mail.smtp.host", "true");
@@ -53,6 +57,7 @@ public class Emailer {
         }
 	}
 	
+	//This method gets the most recent email sent to our exeterschedule email address.  
 	public String[] getRecentEmail() {
 		Properties props = new Properties();
 		//props.put("mail.store.protocol", "pop3");
@@ -96,6 +101,7 @@ public class Emailer {
 		}
 	}
 	
+	//This method returns the number of total messages in the inbox. This method is used so that we can grab only the most recent message in the getRecentEmail method.
 	public int getNumMessages() {
 		Properties props = new Properties();
 		props.put("mail.pop3.host", "pop.gmail.com");
