@@ -26,6 +26,8 @@ public class Schedule implements java.io.Serializable {
 	private int week;
 	private int[] formatHolderType;
 	
+	//Noah
+	//Default constructor
 	Schedule() {
 		this.name = "";
 		this.id = numUsers;
@@ -37,6 +39,8 @@ public class Schedule implements java.io.Serializable {
 		formatHolderType = new int[8];
 	}
 	
+	//Noah
+	//Constructor
 	Schedule(String name) {
 		this.name = name;
 		this.id = numUsers;
@@ -48,15 +52,23 @@ public class Schedule implements java.io.Serializable {
 		formatHolderType = new int[8];
 	}
 	
+	//Peter
+	//Prompts the user to input their schedule and saves the classes, formats, and whether they use reserve in an array.
 	public void getSchedule() {
 		
 		System.out.println("We will now ask you a few questions to set up your schedule");
 		System.out.println("What is your email?");
 		email = scan.nextLine();
-		System.out.println("Is it week 1 or week 2? Type \"1\" or \"2\".");
-		week = scan.nextInt();
-		scan.nextLine();
 		
+		boolean running = true;
+		while(running) {
+			System.out.println("Is it week 1 or week 2? Type \"1\" or \"2\".");
+			if(scan.hasNextInt()) {
+				week = scan.nextInt();
+			}
+			scan.nextLine();
+			if(week == 1 | week == 2) running = false;
+		}
 		for(int i = 0; i < 8; i++) {
 			System.out.println("What is your " + (char)(65 + i) + " format class? Type \"free\" if this is your free format.");
 			formatHolderName[i] = scan.nextLine();
@@ -80,6 +92,8 @@ public class Schedule implements java.io.Serializable {
 		}                  //We should ask if they like all that they typed or if they want to re-enter all information
 	}
 	
+	//Peter
+	//This fills up an array of arraylists with appointments. Each member of an array (each arraylist) is a day. Within the arraylist is each appointment.
 	public void fillSchedule() {
 //WEEK ONE:
 		//MONDAY week one:
@@ -179,7 +193,10 @@ public class Schedule implements java.io.Serializable {
 		
 	}
 	
+	//Peter
+	//This runs through a prompt to ask a user if they would like to schedule a new appointment. It will then add the appointment into their schedule.
 	public void addAppointment() {
+		//scan.nextLine();
 		System.out.println("What is the name of the new appointment?");
 		String newName = scan.nextLine();
 		System.out.println("What is the day at the start-time of the appointment? Enter an integer 0 - 13, where 0 is Monday week one and 13 is Sunday week two.");
@@ -229,6 +246,8 @@ public class Schedule implements java.io.Serializable {
 		}
 	}
 	
+	//Noah
+	//checks if any appointments are beginning at this time. If there is one. It sends a reminder email to the user.
 	public void checkAppointments() {
 		Date now = new Date();
 		simpleDate tmp;
@@ -250,6 +269,8 @@ public class Schedule implements java.io.Serializable {
 		}
 	}
 	
+	//Noah
+	//Checks if it is 11:58, if so, it resets each appointments reminded variable. The reminded variable ensures only one reminder email is sent but must be reset at the end of the day.
 	public void checkResetReminded() {
 		Date now = new Date();
 		if(now.getHours() == 23 && now.getMinutes() == 58) {
@@ -259,6 +280,8 @@ public class Schedule implements java.io.Serializable {
 		}
 	}
 	
+	//Peter
+	//Prompts the user for what appointment they would like to cancel. It will then remove this appointment from the schedule.
 	public void cancelAppointment() {
 		System.out.println("Please type the exact name of the appointment you would like to cancel:");
 		String name = scan.nextLine();
@@ -283,6 +306,8 @@ public class Schedule implements java.io.Serializable {
 		}
 	}
 	
+	//Noah
+	//basic toString method
 	public String toString() {
 		return schedule + "";
 	}
