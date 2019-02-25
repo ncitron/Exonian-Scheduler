@@ -25,26 +25,26 @@ public class Driver {
 			save.saveSchedule(schedule);
 		} else {
 			schedule = save.loadSchedule();
-			System.out.println("Schedule loaded! You will now be receiving email updates!");
-			
+			System.out.println("Schedule loaded! You will now be receiving email updates!");	
 		}
 			
+		Runnable t1 = new Driver().new runnable(schedule); 
+        new Thread(t1).start();
 			
 		//main loop
 		System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");
 		while(true) {
-			String answer = input.nextLine();
-			if(answer.equals("a")) {
-				schedule.addAppointment();
-				System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");
+			if(input.hasNextLine()) {
+				String answer = input.nextLine();
+				if(answer.equals("a")) {
+					schedule.addAppointment();
+					System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");
+				}
+				if(answer.equals("c")) {
+					schedule.cancelAppointment();
+					System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");
+				}
 			}
-			if(answer.equals("c")) {
-				schedule.cancelAppointment();
-				System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");
-			}
-			schedule.checkAppointments();
-			schedule.checkResetReminded();
-			
 		}
 			
 		
@@ -61,4 +61,21 @@ public class Driver {
 			}
 		}*/
 	}
+	
+	private class runnable implements Runnable {
+		private Schedule schedule;
+		
+		public runnable(Schedule _schedule) {
+			schedule = _schedule;
+		}
+		
+		public void run() {
+			//System.out.println(schedule);
+			while(true) {
+				schedule.checkAppointments();
+				schedule.checkResetReminded();
+			}
+		}
+	}
+	
 }

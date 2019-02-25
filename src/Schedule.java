@@ -59,7 +59,6 @@ public class Schedule implements java.io.Serializable {
 		System.out.println("We will now ask you a few questions to set up your schedule");
 		System.out.println("What is your email?");
 		email = scan.nextLine();
-		
 		boolean running = true;
 		while(running) {
 			System.out.println("Is it week 1 or week 2? Type \"1\" or \"2\".");
@@ -251,14 +250,17 @@ public class Schedule implements java.io.Serializable {
 	public void checkAppointments() {
 		Date now = new Date();
 		simpleDate tmp;
-		ArrayList<Appointment> tmpDay = schedule[(now.getDay()-1) + 7 * (week-1)];
+		int tmpday;
+		if(now.getDay() == 0) tmpday = 7;
+		else tmpday = now.getDay();
+		ArrayList<Appointment> tmpDay = schedule[(tmpday-1) + (7 * (week-1))];
 		Emailer mailer = new Emailer();
 		for(int i = 0; i < tmpDay.size(); i++) {		
 			tmp = tmpDay.get(i).getStartTime();
 			now = new Date();
-			if(now.getHours() == tmp.getHour() && now.getMinutes() == tmp.getMinute() && tmpDay.get(i).getReminded() == false) {
+			if(now.getHours() == tmp.getNotifyHour() && now.getMinutes() == tmp.getNotifyMinute() && tmpDay.get(i).getReminded() == false) {
 				if(!(tmpDay.get(i).isReserveToday() == true && tmpDay.get(i).usesReserve() == false)){
-					mailer.sendEmail(email, tmpDay.get(i).getName() + " starts now!", "");
+					mailer.sendEmail(email, tmpDay.get(i).getName() + " starts in 5 minutes!", "");
 					tmpDay.get(i).setReminded(true);
 				}
 			}
@@ -273,9 +275,12 @@ public class Schedule implements java.io.Serializable {
 	//Checks if it is 11:58, if so, it resets each appointments reminded variable. The reminded variable ensures only one reminder email is sent but must be reset at the end of the day.
 	public void checkResetReminded() {
 		Date now = new Date();
+		int tmpday;
+		if(now.getDay() == 0) tmpday = 7;
+		else tmpday = now.getDay();
 		if(now.getHours() == 23 && now.getMinutes() == 58) {
 			for(int i = 0; i < schedule[(now.getDay()-1) + 7 * (week-1)].size(); i++) {
-				schedule[(now.getDay()-1) + 7 * (week-1)].get(i).setReminded(false);
+				schedule[(tmpday-1) + 7 * (week-1)].get(i).setReminded(false);
 			}
 		}
 	}

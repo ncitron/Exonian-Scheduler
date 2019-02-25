@@ -33,6 +33,20 @@ public class simpleDate implements java.io.Serializable {
 		return minute;
 	}
 	
+	public int getNotifyHour() {
+		if(minute < 5) {
+			return hour - 1;
+		}
+		return hour;
+	}
+	
+	public int getNotifyMinute() {
+		if(minute < 5) {
+			return (minute - 5) + 60;
+		}
+		return minute - 5;
+	}
+	
 	//Peter
 	public int compareTo(simpleDate d) { //Returns the difference in minutes
 		return day * 60 * 24 + hour * 60 + minute - (d.getDay() * 60 * 24 + d.getHour() * 60 + d.getMinute());
