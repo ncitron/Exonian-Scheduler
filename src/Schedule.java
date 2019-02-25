@@ -309,6 +309,13 @@ public class Schedule implements java.io.Serializable {
 	//Noah
 	//basic toString method
 	public String toString() {
-		return schedule + "";
+		String toReturn = "Schedule: \n";
+		for(int i = 0; i < 14; i++) {
+			toReturn = toReturn + "Day " + i + ": \n";
+			for(int j = 0; j < schedule[i].size(); j++) {
+				toReturn = toReturn + schedule[i].get(j).toString() + "\n";
+			}
+		}
+		return toReturn;
 	}
 }
