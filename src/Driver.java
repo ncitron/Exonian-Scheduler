@@ -25,8 +25,7 @@ public class Driver {
 			save.saveSchedule(schedule);
 		} else {
 			schedule = save.loadSchedule();
-			//schedule.fillSchedule();
-			System.out.println("Schedule loaded! You will now be receiving email updates!\n" + schedule);
+			System.out.println("Schedule loaded! You will now be receiving email updates!");
 			
 		}
 			
@@ -34,8 +33,15 @@ public class Driver {
 		//main loop
 		System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");
 		while(true) {
-			if(input.nextLine().equals("a")) schedule.addAppointment();
-			if(input.nextLine().equals("c")) schedule.cancelAppointment();
+			String answer = input.nextLine();
+			if(answer.equals("a")) {
+				schedule.addAppointment();
+				System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");
+			}
+			if(answer.equals("c")) {
+				schedule.cancelAppointment();
+				System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");
+			}
 			schedule.checkAppointments();
 			schedule.checkResetReminded();
 			

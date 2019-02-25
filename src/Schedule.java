@@ -19,7 +19,7 @@ public class Schedule implements java.io.Serializable {
 	private int id;
 	static int numUsers = 0;
 	private ArrayList<Appointment>[] schedule;
-	private transient Scanner scan = new Scanner (System.in);
+	private static Scanner scan = new Scanner (System.in);
 	private String[] formatHolderName;     /////THIS WILL HOLD A - H FORMATS to be loaded into the schedule.
 	private boolean[] formatHolderReserve;         //// This says whether or not they use reserve
 	private String email; 
