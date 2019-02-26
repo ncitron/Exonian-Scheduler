@@ -1,11 +1,13 @@
 import java.io.*;
 
+//Noah
 public class SaveHandler {
 	
 	SaveHandler() {
 		
 	}
 	
+	//this method serializes our the schedule passed to it and saves it in the file test.ser
 	public void saveSchedule(Schedule s) {
 		try {
 			FileOutputStream f = new FileOutputStream("test.ser");
@@ -21,6 +23,7 @@ public class SaveHandler {
 		}
 	}
 	
+	//This method fetches the schedule stored in test.ser and returns it
 	public Schedule loadSchedule() {
 		try {
 			FileInputStream f = new FileInputStream("test.ser");

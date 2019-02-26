@@ -19,13 +19,16 @@ public class Schedule implements java.io.Serializable {
 	private int id;
 	static int numUsers = 0;
 	private ArrayList<Appointment>[] schedule;
-	private transient Scanner scan = new Scanner (System.in);
+	private static Scanner scan = new Scanner (System.in);
 	private String[] formatHolderName;     /////THIS WILL HOLD A - H FORMATS to be loaded into the schedule.
 	private boolean[] formatHolderReserve;         //// This says whether or not they use reserve
 	private String email; 
 	private int week;
 	private int[] formatHolderType;
+	private static SaveHandler save = new SaveHandler();
 	
+	//Noah
+	//Default constructor
 	Schedule() {
 		this.name = "";
 		this.id = numUsers;
@@ -37,6 +40,8 @@ public class Schedule implements java.io.Serializable {
 		formatHolderType = new int[8];
 	}
 	
+	//Noah
+	//Constructor
 	Schedule(String name) {
 		this.name = name;
 		this.id = numUsers;
@@ -48,15 +53,22 @@ public class Schedule implements java.io.Serializable {
 		formatHolderType = new int[8];
 	}
 	
+	//Peter
+	//Prompts the user to input their schedule and saves the classes, formats, and whether they use reserve in an array.
 	public void getSchedule() {
 		
 		System.out.println("We will now ask you a few questions to set up your schedule");
 		System.out.println("What is your email?");
 		email = scan.nextLine();
-		System.out.println("Is it week 1 or week 2? Type \"1\" or \"2\".");
-		week = scan.nextInt();
-		scan.nextLine();
-		
+		boolean running = true;
+		while(running) {
+			System.out.println("Is it week 1 or week 2? Type \"1\" or \"2\".");
+			if(scan.hasNextInt()) {
+				week = scan.nextInt();
+			}
+			scan.nextLine();
+			if(week == 1 | week == 2) running = false;
+		}
 		for(int i = 0; i < 8; i++) {
 			System.out.println("What is your " + (char)(65 + i) + " format class? Type \"free\" if this is your free format.");
 			formatHolderName[i] = scan.nextLine();
@@ -80,6 +92,8 @@ public class Schedule implements java.io.Serializable {
 		}                  //We should ask if they like all that they typed or if they want to re-enter all information
 	}
 	
+	//Peter
+	//This fills up an array of arraylists with appointments. Each member of an array (each arraylist) is a day. Within the arraylist is each appointment.
 	public void fillSchedule() {
 //WEEK ONE:
 		//MONDAY week one:
@@ -179,7 +193,10 @@ public class Schedule implements java.io.Serializable {
 		
 	}
 	
+	//Peter
+	//This runs through a prompt to ask a user if they would like to schedule a new appointment. It will then add the appointment into their schedule.
 	public void addAppointment() {
+		//scan.nextLine();
 		System.out.println("What is the name of the new appointment?");
 		String newName = scan.nextLine();
 		System.out.println("What is the day at the start-time of the appointment? Enter an integer 0 - 13, where 0 is Monday week one and 13 is Sunday week two.");
@@ -226,21 +243,29 @@ public class Schedule implements java.io.Serializable {
 		} else {
 			schedule[newStartDay].add(new Appointment(newStart, newEnd, newName, 1, true, true));
 			System.out.println("This appointment has been successfully added");
+			save.saveSchedule(this);
 		}
 	}
 	
+	//Noah
+	//checks if any appointments are beginning at this time. If there is one. It sends a reminder email to the user.
 	public void checkAppointments() {
 		Date now = new Date();
 		simpleDate tmp;
-		ArrayList<Appointment> tmpDay = schedule[(now.getDay()-1) + 7 * (week-1)];
+		int tmpday;
+		if(now.getDay() == 0) tmpday = 7;
+		else tmpday = now.getDay();
+		ArrayList<Appointment> tmpDay = schedule[(tmpday-1) + (7 * (week-1))];
 		Emailer mailer = new Emailer();
-		for(int i = 0; i < tmpDay.size(); i++) {		
+		for(int i = 0; i < schedule[(tmpday-1) + (7 * (week-1))].size(); i++) {		
 			tmp = tmpDay.get(i).getStartTime();
 			now = new Date();
-			if(now.getHours() == tmp.getHour() && now.getMinutes() == tmp.getMinute() && tmpDay.get(i).getReminded() == false) {
+			if(now.getHours() == tmp.getNotifyHour() && now.getMinutes() == tmp.getNotifyMinute() && tmpDay.get(i).getReminded() == false) {
 				if(!(tmpDay.get(i).isReserveToday() == true && tmpDay.get(i).usesReserve() == false)){
-					mailer.sendEmail(email, tmpDay.get(i).getName() + " starts now!", "");
-					tmpDay.get(i).setReminded(true);
+					if(mailer.sendEmail(email, tmpDay.get(i).getName() + " starts in 5 minutes!", "")) {
+						schedule[(tmpday-1) + (7 * (week-1))].get(i).setReminded(true);
+						save.saveSchedule(this);
+					}
 				}
 			}
 		}
@@ -250,15 +275,22 @@ public class Schedule implements java.io.Serializable {
 		}
 	}
 	
+	//Noah
+	//Checks if it is 11:58, if so, it resets each appointments reminded variable. The reminded variable ensures only one reminder email is sent but must be reset at the end of the day.
 	public void checkResetReminded() {
 		Date now = new Date();
+		int tmpday;
+		if(now.getDay() == 0) tmpday = 7;
+		else tmpday = now.getDay();
 		if(now.getHours() == 23 && now.getMinutes() == 58) {
 			for(int i = 0; i < schedule[(now.getDay()-1) + 7 * (week-1)].size(); i++) {
-				schedule[(now.getDay()-1) + 7 * (week-1)].get(i).setReminded(false);
+				schedule[(tmpday-1) + 7 * (week-1)].get(i).setReminded(false);
 			}
 		}
 	}
 	
+	//Peter
+	//Prompts the user for what appointment they would like to cancel. It will then remove this appointment from the schedule.
 	public void cancelAppointment() {
 		System.out.println("Please type the exact name of the appointment you would like to cancel:");
 		String name = scan.nextLine();
@@ -278,17 +310,20 @@ public class Schedule implements java.io.Serializable {
 		if(found) {
 			schedule[locationOfDay].remove(locationOfAppointment);
 			System.out.println("The appointment has been successfully removed.");
+			save.saveSchedule(this);
 		} else {
 			System.out.println("An appointment of the given name could no be located. Please make sure that the name is typed exactly as it was originally entered.");
 		}
 	}
 	
+	//Noah
+	//basic toString method
 	public String toString() {
 		String toReturn = "Schedule: \n";
 		for(int i = 0; i < 14; i++) {
 			toReturn = toReturn + "Day " + i + ": \n";
 			for(int j = 0; j < schedule[i].size(); j++) {
-				toReturn = toReturn + schedule[i].get(j).toString() + "\n";
+				toReturn = toReturn + schedule[i].get(j).toString() + schedule[i].get(j).getReminded() + "\n";
 			}
 		}
 		return toReturn;
