@@ -3,6 +3,9 @@
 public class Driver {
 
 	public static void main(String[] args) {
+		Schedule test = new Schedule();
+		test.getSchedule();
+		test.fillSchedule();
 		//Schedule schedule = new Schedule();
 		//schedule.getSchedule();
 		//SaveHandler save = new SaveHandler();
@@ -11,7 +14,7 @@ public class Driver {
 		String[] mes;
 		
 		while(true) {
-			mes = e.getRecentEmail();
+			mes = e.getRecentEmail(); 
 			if(mes!=null) {
 				for(int i = 0; i<mes.length; i++) {
 					System.out.println(mes[i]);
