@@ -28,6 +28,7 @@ public class Driver {
 			System.out.println("Schedule loaded! You will now be receiving email updates!");	
 		}
 			
+		
 		Runnable t1 = new Driver().new runnable(schedule); 
         new Thread(t1).start();
 			
@@ -46,6 +47,7 @@ public class Driver {
 				}
 			}
 		}
+		
 			
 		
 		

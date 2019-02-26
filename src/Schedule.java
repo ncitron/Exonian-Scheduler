@@ -111,7 +111,7 @@ public class Schedule implements java.io.Serializable {
 		schedule[1].add(new Appointment(new simpleDate(1, 8, 55), new simpleDate(1, 9, 45), formatHolderName[0], formatHolderType[0], formatHolderReserve[0], false));
 		schedule[1].add(new Appointment(new simpleDate(1, 10, 45), new simpleDate(1, 11, 35), formatHolderName[3], formatHolderType[3], formatHolderReserve[3], false));
 		schedule[1].add(new Appointment(new simpleDate(1, 11, 40), new simpleDate(1, 12, 50), formatHolderName[2], formatHolderType[2], formatHolderReserve[2], false)); // C Long
-		schedule[1].add(new Appointment(new simpleDate(1, 13, 40), new simpleDate(1, 14, 30), formatHolderName[4], formatHolderType[4], formatHolderReserve[4], false));
+		/*Edited*/ schedule[1].add(new Appointment(new simpleDate(1, 14, 53), new simpleDate(1, 14, 30), formatHolderName[4], formatHolderType[4], formatHolderReserve[4], false));
 		schedule[1].add(new Appointment(new simpleDate(1, 14, 35), new simpleDate(1, 15, 45), formatHolderName[5], formatHolderType[5], formatHolderReserve[5], false)); // F Long
 		schedule[1].add(new Appointment(new simpleDate(1, 16, 15), new simpleDate(1, 17, 5), formatHolderName[6], formatHolderType[6], formatHolderReserve[6], true));
 		schedule[1].add(new Appointment(new simpleDate(1, 17, 10), new simpleDate(1, 18, 0), formatHolderName[7], formatHolderType[7], formatHolderReserve[7], false));
@@ -263,7 +263,7 @@ public class Schedule implements java.io.Serializable {
 			if(now.getHours() == tmp.getNotifyHour() && now.getMinutes() == tmp.getNotifyMinute() && tmpDay.get(i).getReminded() == false) {
 				if(!(tmpDay.get(i).isReserveToday() == true && tmpDay.get(i).usesReserve() == false)){
 					if(mailer.sendEmail(email, tmpDay.get(i).getName() + " starts in 5 minutes!", "")) {
-						tmpDay.get(i).setReminded(true);
+						schedule[(tmpday-1) + (7 * (week-1))].get(i).setReminded(true);
 						save.saveSchedule(this);
 					}
 				}
@@ -323,7 +323,7 @@ public class Schedule implements java.io.Serializable {
 		for(int i = 0; i < 14; i++) {
 			toReturn = toReturn + "Day " + i + ": \n";
 			for(int j = 0; j < schedule[i].size(); j++) {
-				toReturn = toReturn + schedule[i].get(j).toString() + "\n";
+				toReturn = toReturn + schedule[i].get(j).toString() + schedule[i].get(j).getReminded() + "\n";
 			}
 		}
 		return toReturn;
