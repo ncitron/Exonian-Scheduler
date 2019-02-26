@@ -49,7 +49,7 @@ public class Emailer {
 	        emailer.setSubject(subject);
 	        emailer.setText(message);
 	        Transport.send(emailer);
-	        System.out.println("Success!");
+	        System.out.println("Email sent!");
 	        return true;
         } 
         

@@ -247,7 +247,7 @@ public class Schedule implements java.io.Serializable {
 		}
 	}
 	
-	//Noah
+	//Noa
 	//checks if any appointments are beginning at this time. If there is one. It sends a reminder email to the user.
 	public void checkAppointments() {
 		Date now = new Date();
@@ -260,8 +260,9 @@ public class Schedule implements java.io.Serializable {
 		for(int i = 0; i < schedule[(tmpday-1) + (7 * (week-1))].size(); i++) {		
 			tmp = tmpDay.get(i).getStartTime();
 			now = new Date();
-			if(now.getHours() == tmp.getNotifyHour() && now.getMinutes() == tmp.getNotifyMinute() && tmpDay.get(i).getReminded() == false) {
+			if(now.getHours() == tmp.getNotifyHour() && now.getMinutes() == tmp.getNotifyMinute() && schedule[(tmpday-1) + (7 * (week-1))].get(i).getReminded() == false) {
 				if(!(tmpDay.get(i).isReserveToday() == true && tmpDay.get(i).usesReserve() == false)){
+					
 					if(mailer.sendEmail(email, tmpDay.get(i).getName() + " starts in 5 minutes!", "")) {
 						schedule[(tmpday-1) + (7 * (week-1))].get(i).setReminded(true);
 						save.saveSchedule(this);
