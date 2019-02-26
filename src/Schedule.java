@@ -25,6 +25,7 @@ public class Schedule implements java.io.Serializable {
 	private String email; 
 	private int week;
 	private int[] formatHolderType;
+	private static SaveHandler save = new SaveHandler();
 	
 	//Noah
 	//Default constructor
@@ -242,6 +243,7 @@ public class Schedule implements java.io.Serializable {
 		} else {
 			schedule[newStartDay].add(new Appointment(newStart, newEnd, newName, 1, true, true));
 			System.out.println("This appointment has been successfully added");
+			save.saveSchedule(this);
 		}
 	}
 	
@@ -255,13 +257,15 @@ public class Schedule implements java.io.Serializable {
 		else tmpday = now.getDay();
 		ArrayList<Appointment> tmpDay = schedule[(tmpday-1) + (7 * (week-1))];
 		Emailer mailer = new Emailer();
-		for(int i = 0; i < tmpDay.size(); i++) {		
+		for(int i = 0; i < schedule[(tmpday-1) + (7 * (week-1))].size(); i++) {		
 			tmp = tmpDay.get(i).getStartTime();
 			now = new Date();
-			if(now.getHours() == tmp.getNotifyHour() && now.getMinutes() == tmp.getNotifyMinute() && tmpDay.get(i).getReminded() == false) {
+			if(now.getHours() == tmp.getNotifyHour() && now.getMinutes() >= tmp.getNotifyMinute() && tmpDay.get(i).getReminded() == false) {
 				if(!(tmpDay.get(i).isReserveToday() == true && tmpDay.get(i).usesReserve() == false)){
-					mailer.sendEmail(email, tmpDay.get(i).getName() + " starts in 5 minutes!", "");
-					tmpDay.get(i).setReminded(true);
+					if(mailer.sendEmail(email, tmpDay.get(i).getName() + " starts in 5 minutes!", "")) {
+						tmpDay.get(i).setReminded(true);
+						save.saveSchedule(this);
+					}
 				}
 			}
 		}
@@ -306,6 +310,7 @@ public class Schedule implements java.io.Serializable {
 		if(found) {
 			schedule[locationOfDay].remove(locationOfAppointment);
 			System.out.println("The appointment has been successfully removed.");
+			save.saveSchedule(this);
 		} else {
 			System.out.println("An appointment of the given name could no be located. Please make sure that the name is typed exactly as it was originally entered.");
 		}

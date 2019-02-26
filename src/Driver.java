@@ -62,6 +62,8 @@ public class Driver {
 		}*/
 	}
 	
+	
+	//seperate thread that will handle checking if emails need to be sent.
 	private class runnable implements Runnable {
 		private Schedule schedule;
 		
@@ -72,8 +74,10 @@ public class Driver {
 		public void run() {
 			//System.out.println(schedule);
 			while(true) {
-				schedule.checkAppointments();
-				schedule.checkResetReminded();
+				if(schedule != null) {
+					schedule.checkAppointments();
+					schedule.checkResetReminded();
+				}
 			}
 		}
 	}
