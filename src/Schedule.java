@@ -195,7 +195,12 @@ public class Schedule implements java.io.Serializable {
 	//Peter
 	//This runs through a prompt to ask a user if they would like to schedule a new appointment. It will then add the appointment into their schedule.
 	public void addAppointment() {
-		int newStartDay, newStartHour, newStartMinute, newEndDay, newEndHour, newEndMinute;
+		int newStartDay = 0;
+		int newStartHour = 0;
+		int newStartMinute = 0;
+		int newEndDay = 0;
+		int newEndHour = 0;
+		int newEndMinute = 0;
 		System.out.println("What is the name of the new appointment?");
 		String newName = scan.nextLine();
 		boolean goodAns = false;
@@ -207,6 +212,8 @@ public class Schedule implements java.io.Serializable {
 				if(newStartDay >= 0 && newStartDay <= 13) {
 					goodAns = true;
 				} 
+			} else {
+			scan.nextLine();
 			}
 		}
 		goodAns = false;
@@ -218,6 +225,8 @@ public class Schedule implements java.io.Serializable {
 				if(newStartHour >= 1 && newStartHour <= 24) {
 					goodAns = true;
 				}
+			} else {
+				scan.nextLine();
 			}
 		}
 		goodAns = false;
@@ -229,6 +238,8 @@ public class Schedule implements java.io.Serializable {
 				if(newStartMinute >= 0 && newStartMinute <= 59) {
 					goodAns = true;
 				}
+			} else {
+				scan.nextLine();
 			}
 		}
 		goodAns = false;
@@ -240,28 +251,34 @@ public class Schedule implements java.io.Serializable {
 				if(newEndDay >= 0 && newEndDay <= 13) {
 					goodAns = true;
 				}
+			} else {
+				scan.nextLine();
 			}
 		}
 		goodAns = false;
 		while(!goodAns) {
-		System.out.println("What is the hour at the end-time of the appointment? Enter an integer 1 - 24, in military time.");
+			System.out.println("What is the hour at the end-time of the appointment? Enter an integer 1 - 24, in military time.");
 			if(scan.hasNextInt()) {
 				newEndHour = scan.nextInt();
 				scan.nextLine();
 				if(newEndHour >= 1 && newEndHour <= 24) {
 					goodAns = true;
 				}
+			} else {
+				scan.nextLine();
 			}
 		}
 		goodAns = false;
 		while(!goodAns) {
-		System.out.println("What is the minute at the end-time of the appointment? Enter an integer 0 - 59.");
+			System.out.println("What is the minute at the end-time of the appointment? Enter an integer 0 - 59.");
 			if(scan.hasNextInt()) {
 				newEndMinute = scan.nextInt();
 				scan.nextLine();
 				if(newEndMinute >= 0 && newEndMinute <= 59) {
 					goodAns = true;
 				}
+			} else {
+				scan.nextLine();
 			}
 		}
 		simpleDate newStart = new simpleDate(newStartDay, newStartHour, newStartMinute);
