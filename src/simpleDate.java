@@ -33,6 +33,7 @@ public class simpleDate implements java.io.Serializable {
 		return minute;
 	}
 	
+	//Noah
 	public int getNotifyHour() {
 		if(minute < 5) {
 			return hour - 1;
@@ -40,6 +41,7 @@ public class simpleDate implements java.io.Serializable {
 		return hour;
 	}
 	
+	//Noah
 	public int getNotifyMinute() {
 		if(minute < 5) {
 			return (minute - 5) + 60;

@@ -10,7 +10,7 @@ public class Appointment implements java.io.Serializable {
 	private boolean reminded;
 	private boolean reserveToday;
 	
-	//Noah
+	//Peter + Noah
 	//Default Constructor
 	public Appointment() {
 		startTime = new simpleDate(0, 0, 0);
@@ -22,7 +22,7 @@ public class Appointment implements java.io.Serializable {
 		reserveToday = false;
 	}
 	
-	//Noah
+	//Peter + Noah
 	//Constructor
 	public Appointment(simpleDate theStart, simpleDate theEnd, String theName, int theType, boolean reserve, boolean reserveToday) {
 		startTime = theStart;
@@ -84,7 +84,7 @@ public class Appointment implements java.io.Serializable {
 	
 	//Peter
 	//toString method that returns the start time, end time, the appointment name, and the appointment type
-	public String toString() {             //NEEDS TO BE UPDATED FOR THE NEW PARAMETERS
+	public String toString() {             
 		return startTime.toString() + " " + endTime.toString() + " " + appName + " " + appType;
 	}
 

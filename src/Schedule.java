@@ -10,10 +10,7 @@ public class Schedule implements java.io.Serializable {
 //	Monday is day 0 and Sunday is day 6 for week one
 //	Monday is day 7 and Sunday is day 13 for week two
 //	A format is 0 and H format is 7
-//	Type 0 means academic
-//	WE ALSO NEED TO CHECK IF YOU TYPE "free"
-//	We still need to type a reminder for homework
-//	We need to fix the scanner for "what week" so that it is foolproof for ints
+//	Type 0 means academic, 1 means non-academic, and 2 means free format
 
 	private String name;
 	private int id;
@@ -54,7 +51,7 @@ public class Schedule implements java.io.Serializable {
 	}
 	
 	//Peter
-	//Prompts the user to input their schedule and saves the classes, formats, and whether they use reserve in an array.
+	//Prompts the user to input their schedule and saves the classes, formats, and whether they use reserve in 3 arrays.
 	public void getSchedule() {
 		
 		System.out.println("We will now ask you a few questions to set up your schedule");
@@ -78,20 +75,22 @@ public class Schedule implements java.io.Serializable {
 				formatHolderType[i] = 0;
 			}
 			boolean okayAns = false;
-			while(!okayAns) {
-				System.out.println("Does this class use reserve? Please type \"yes\" or \"no\".");
-				String tempAnswer = scan.nextLine();
-				if(tempAnswer.toLowerCase().equals("yes")) {
-					formatHolderReserve[i] = true;
-					okayAns = true;
-				} else if(tempAnswer.toLowerCase().equals("no")) {
-					formatHolderReserve[i] = false;
-					okayAns = true;
+			if(formatHolderType[i] != 2) {
+				while(!okayAns) {
+					System.out.println("Does this class use reserve? Please type \"yes\" or \"no\".");
+					String tempAnswer = scan.nextLine();
+					if(tempAnswer.toLowerCase().equals("yes")) {
+						formatHolderReserve[i] = true;
+						okayAns = true;
+					} else if(tempAnswer.toLowerCase().equals("no")) {
+						formatHolderReserve[i] = false;
+						okayAns = true;
+					}
 				}
 			}
 		}                  //We should ask if they like all that they typed or if they want to re-enter all information
 	}
-	
+
 	//Peter
 	//This fills up an array of arraylists with appointments. Each member of an array (each arraylist) is a day. Within the arraylist is each appointment.
 	public void fillSchedule() {
@@ -196,35 +195,85 @@ public class Schedule implements java.io.Serializable {
 	//Peter
 	//This runs through a prompt to ask a user if they would like to schedule a new appointment. It will then add the appointment into their schedule.
 	public void addAppointment() {
-		//scan.nextLine();
+		int newStartDay, newStartHour, newStartMinute, newEndDay, newEndHour, newEndMinute;
 		System.out.println("What is the name of the new appointment?");
 		String newName = scan.nextLine();
-		System.out.println("What is the day at the start-time of the appointment? Enter an integer 0 - 13, where 0 is Monday week one and 13 is Sunday week two.");
-		int newStartDay = scan.nextInt();
-		scan.nextLine();
-		System.out.println("What is the hour at the start-time of the appointment? Enter an integer 1 - 24, in military time.");
-		int newStartHour = scan.nextInt(); 
-		scan.nextLine();
-		System.out.println("What is the minute at the start-time of the appointment? Enter an integer 1 - 60.");
-		int newStartMinute = scan.nextInt();
-		scan.nextLine();
-		System.out.println("What is the day at the end-time of the appointment? Enter an integer 0 - 13, where 0 is Monday week one and 13 is Sunday week two.");
-		int newEndDay = scan.nextInt();
-		scan.nextLine();
+		boolean goodAns = false;
+		while(!goodAns) {
+			System.out.println("What is the day at the start-time of the appointment? Enter an integer 0 - 13, where 0 is Monday week one and 13 is Sunday week two.");
+			if(scan.hasNextInt()) {
+				newStartDay = scan.nextInt();
+				scan.nextLine();
+				if(newStartDay >= 0 && newStartDay <= 13) {
+					goodAns = true;
+				} 
+			}
+		}
+		goodAns = false;
+		while(!goodAns) {
+			System.out.println("What is the hour at the start-time of the appointment? Enter an integer 1 - 24, in military time.");
+			if(scan.hasNextInt()) {
+				newStartHour = scan.nextInt(); 
+				scan.nextLine();
+				if(newStartHour >= 1 && newStartHour <= 24) {
+					goodAns = true;
+				}
+			}
+		}
+		goodAns = false;
+		while(!goodAns) {
+			System.out.println("What is the minute at the start-time of the appointment? Enter an integer 0 - 59.");
+			if(scan.hasNextInt()) {
+				newStartMinute = scan.nextInt();
+				scan.nextLine();
+				if(newStartMinute >= 0 && newStartMinute <= 59) {
+					goodAns = true;
+				}
+			}
+		}
+		goodAns = false;
+		while(!goodAns) {
+			System.out.println("What is the day at the end-time of the appointment? Enter an integer 0 - 13, where 0 is Monday week one and 13 is Sunday week two.");
+			if(scan.hasNextInt()) {
+				newEndDay = scan.nextInt();
+				scan.nextLine();
+				if(newEndDay >= 0 && newEndDay <= 13) {
+					goodAns = true;
+				}
+			}
+		}
+		goodAns = false;
+		while(!goodAns) {
 		System.out.println("What is the hour at the end-time of the appointment? Enter an integer 1 - 24, in military time.");
-		int newEndHour = scan.nextInt();
-		scan.nextLine();
-		System.out.println("What is the minute at the end-time of the appointment? Enter an integer 1 - 60.");
-		int newEndMinute = scan.nextInt();
-		scan.nextLine();
+			if(scan.hasNextInt()) {
+				newEndHour = scan.nextInt();
+				scan.nextLine();
+				if(newEndHour >= 1 && newEndHour <= 24) {
+					goodAns = true;
+				}
+			}
+		}
+		goodAns = false;
+		while(!goodAns) {
+		System.out.println("What is the minute at the end-time of the appointment? Enter an integer 0 - 59.");
+			if(scan.hasNextInt()) {
+				newEndMinute = scan.nextInt();
+				scan.nextLine();
+				if(newEndMinute >= 0 && newEndMinute <= 59) {
+					goodAns = true;
+				}
+			}
+		}
 		simpleDate newStart = new simpleDate(newStartDay, newStartHour, newStartMinute);
 		simpleDate newEnd = new simpleDate(newEndDay, newEndHour, newEndMinute);
 		
 		boolean isFree = true;
 		for(int i = 0; i < schedule[newStartDay].size(); i++) {
-			if(schedule[newStartDay].get(i).getType() == 0 && newStart.compareTo(schedule[newStartDay].get(i).getStartTime()) > 0 && newStart.compareTo(schedule[newStartDay].get(i).getEndTime()) < 0){ //checks if a new appointment's start is within an already existing appointment
+			if((schedule[newStartDay].get(i).getType() == 0 || schedule[newStartDay].get(i).getType() == 1) && newStart.compareTo(schedule[newStartDay].get(i).getStartTime()) > 0 && newStart.compareTo(schedule[newStartDay].get(i).getEndTime()) < 0){ //checks if a new appointment's start is within an already existing appointment
 				isFree = false;
-			} else if(schedule[newStartDay].get(i).getType() == 0 && newEnd.compareTo(schedule[newStartDay].get(i).getStartTime()) > 0 && newEnd.compareTo(schedule[newStartDay].get(i).getEndTime()) < 0){ //Same, but for the new end time
+			} else if((schedule[newStartDay].get(i).getType() == 0 || schedule[newStartDay].get(i).getType() == 1) && newEnd.compareTo(schedule[newStartDay].get(i).getStartTime()) > 0 && newEnd.compareTo(schedule[newStartDay].get(i).getEndTime()) < 0){ //Same, but for the new end time
+				isFree = false;
+			} else if(newStart.compareTo(schedule[newStartDay].get(i).getStartTime()) < 0 && newEnd.compareTo(schedule[newStartDay].get(i).getEndTime()) > 0) {
 				isFree = false;
 			}
 		}
@@ -316,7 +365,7 @@ public class Schedule implements java.io.Serializable {
 		}
 	}
 	
-	//Noah
+	//Peter
 	//basic toString method
 	public String toString() {
 		String toReturn = "Schedule: \n";
