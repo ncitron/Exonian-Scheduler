@@ -28,10 +28,12 @@ public class Driver {
 			System.out.println("Schedule loaded! You will now be receiving email updates!");	
 		}
 			
-		System.out.println(schedule);
+		//System.out.println(schedule);
 		
 		Runnable t1 = new Driver().new runnable(schedule); 
-        new Thread(t1).start();
+        Thread t = new Thread(t1);
+        t.setDaemon(true);
+        t.start();
 			
 		//main loop
 		System.out.println("Type 'a' to add an appontment. Type 'c' to remove one");

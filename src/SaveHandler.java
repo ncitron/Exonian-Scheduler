@@ -10,6 +10,9 @@ public class SaveHandler {
 	//this method serializes our the schedule passed to it and saves it in the file test.ser
 	public void saveSchedule(Schedule s) {
 		try {
+			FileOutputStream writer = new FileOutputStream("test.ser");
+			writer.close();
+			
 			FileOutputStream f = new FileOutputStream("test.ser");
 			ObjectOutputStream o = new ObjectOutputStream(f);
 			
